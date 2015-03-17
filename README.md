@@ -1,4 +1,4 @@
-#  grunt-task-symlink v0.1.0
+#  grunt-task-symlink v0.1.1
 
 > Create symbolic links files and directory using node fs.
 
@@ -56,6 +56,7 @@ symlink: {
 
 ## Release History
 
+ * 2014-03-17   v0.1.1   Working release.
  * 2014-03-17   v0.1.0   Unofficial release.
 
 ---

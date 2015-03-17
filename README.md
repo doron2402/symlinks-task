@@ -1,90 +1,63 @@
-# grunt-symlink
+#  grunt-task-symlink v0.1.0
 
-> Grunt task for generating symlinks on Mac and Linux
+> Create symbolic links files and directory using node fs.
 
 ## Getting Started
-This plugin requires Grunt `~0.4.5`
+This plugin requires Grunt `~0.4.1`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-symlink --save-dev
+npm install grunt-task-symlink --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-symlink');
+grunt.loadNpmTasks('grunt-task-symlink');
 ```
 
-## The "symlink" task
+## Why??
+_I build this grunt task cause i need some simple grunt task that can generate symlink_
 
-### Overview
-In your project's Gruntfile, add a section named `symlink` to the data object passed into `grunt.initConfig()`.
+## How to use?
+  - Run the grunt task
+  - set Object in the links array
+  - when linking directory set type: `dir`
+  - when linking files set type: `file`
+  - src is your directory/file
+  - dst is your symlink directory/file
+  - IMPORTANT:: symlink will always will overwrite your symlink!
 
-```js
-grunt.initConfig({
-  symlink: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-});
-```
 
-### Options
-
-#### options.separator
-Type: `String`
-Default value: `',  '`
-
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
+## Symlink task
+_Run this task with the `grunt symlink` command._
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
 ```js
-grunt.initConfig({
-  symlink: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+symlink: {
+    symlink_options: {
+      links: [
+        {
+          src: 'test/src_dir/app',
+          dst: 'test/src_dir/node_modules/app',
+          type: 'dir'
+        },
+        {
+          src: 'test/src_dir/app/index.js',
+          dst: 'test/src_dir/node_modules/app.js',
+          type: 'file'}
+      ]
+    }
   },
-});
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  symlink: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
-# symlinks-task
+
+ * 2014-03-17   v0.1.0   Unofficial release.
+
+---
+
+Task submitted by ["doron2402" Doron Segal](http://segaldoron.com/)

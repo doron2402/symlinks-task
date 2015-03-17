@@ -1,7 +1,7 @@
 'use strict';
 
 var grunt = require('grunt');
-
+var fs = require('fs');
 /*
   ======== A Handy Little Nodeunit Reference ========
   https://github.com/caolan/nodeunit
@@ -23,26 +23,22 @@ var grunt = require('grunt');
 */
 
 exports.symlink = {
-  setUp: function(done) {
-    // setup here if necessary
-    done();
-  },
-  default_options: function(test) {
-    test.expect(1);
-
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
-
+  symlink_options: function(test) {
+    console.log(__dirname);
+    var src_file = grunt.file.read('test/src_dir/app/index.js');
+    var dst_file = grunt.file.read('test/src_dir/node_modules/app.js');
+    test.equal(src_file, dst_file, 'should be same text');
     test.done();
   },
-  custom_options: function(test) {
-    test.expect(1);
-
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
-
+  symlink_options_dir: function(test) {
+    try {
+        // Query the entry
+        var stats = fs.lstatSync('test/src_dir/node_modules/app');
+        test.equal(stats, true, 'symlink directoy created.');
+    }
+    catch (e) {
+      test.ifError(e);
+    }
     test.done();
   },
 };

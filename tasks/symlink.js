@@ -9,42 +9,40 @@
 'use strict';
 
 module.exports = function(grunt) {
-
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+  var fs = require('fs');
+  var path = require('path');
 
   grunt.registerMultiTask('symlink', 'Grunt task for generating symlinks on Mac and Linux', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
+    if (this.data.links.length === 0) {
+      grunt.fail.warn('links is an empty array');
+    }
+
+    // var options = this.options({
+    //   overwrite: false,
+    //   force: false
+    // });
+
+    // // overwrite options from CLI
+    // options.overwrite = grunt.option('overwrite') || options.overwrite;
+
+   this.data.links.forEach(function(link) {
+    if (!link.src || !link.dst) {
+      grunt.fail.warn('link need to have source and destination directory.');
+    }
+    grunt.log.writeln('Creating Symlink. '  + link.dst + ' -> ' + link.src);
+
+    var type = link.type || 'dir';
+
+    fs.symlink(link.src, link.dst, type, function (err) {
+      if (err) {
+        grunt.log.error(err.code === 'EEXIST' ? "Link already created!\n" : "Error\n");
+        grunt.log.error(err);
+      }
+      grunt.log.ok('Done. Symlink ' + link.dst + ' -> ' + link.src);
+
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+   });
 
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
   });
-
 };

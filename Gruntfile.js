@@ -30,21 +30,18 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     symlink: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
+      symlink_options: {
+        links: [
+          {
+            src: 'test/src_dir/app',
+            dst: 'test/src_dir/node_modules/app',
+            type: 'dir'
+          },
+          {
+            src: 'test/src_dir/app/index.js',
+            dst: 'test/src_dir/node_modules/app.js',
+            type: 'file'}
+        ]
       }
     },
 
@@ -68,6 +65,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['clean', 'symlink', 'nodeunit']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['jshint','symlink']);
 
 };

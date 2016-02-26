@@ -1,7 +1,7 @@
 {
   "name": "grunt-task-symlink",
   "description": "Grunt task for generating symlinks on Mac and Linux",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/doron2402/symlinks-task",
   "author": {
     "name": "Doron Segal",
